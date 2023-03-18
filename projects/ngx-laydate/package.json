@@ -1,10 +1,21 @@
 {
   "name": "ngx-laydate",
-  "version": "0.0.1",
-  "peerDependencies": {
-    "@angular/common": "^10.2.4",
-    "@angular/core": "^10.2.4"
+  "version": "1.0.0",
+  "author": "lanxuexing",
+  "license": "MIT",
+  "keywords": [
+    "angular",
+    "ng",
+    "ngx",
+    "laydate",
+    "ngx-laydate",
+    "layui-laydate"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lanxuexing/ngx-laydate.git"
   },
+  "bugs": "https://github.com/lanxuexing/ngx-laydate/issues",
   "dependencies": {
     "tslib": "^2.0.0"
   }

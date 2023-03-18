@@ -57,6 +57,10 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "allowedCommonJsDependencies": [
+              "laydate",
+              "layui-laydate"
+            ],
             "outputPath": "dist/example",
             "index": "projects/example/src/index.html",
             "main": "projects/example/src/main.ts",
@@ -65,7 +69,12 @@
             "aot": true,
             "assets": [
               "projects/example/src/favicon.ico",
-              "projects/example/src/assets"
+              "projects/example/src/assets",
+              {
+                "glob": "**/*",
+                "input": "node_modules/layui-laydate/dist/",
+                "output": "assets/laydate"
+              }
             ],
             "styles": [
               "projects/example/src/styles.scss"
