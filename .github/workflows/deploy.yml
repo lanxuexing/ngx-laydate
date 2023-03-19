@@ -16,5 +16,10 @@ jobs:
           node-version: '14.x'
       - name: Install Dependencies
         run: npm install
-      - name: Build and Deploy
-        run: npm run build:deploy
+      - name: Build Lrirary
+        run: npm run build:ci
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@4.1.4
+        with:
+          branch: gh-pages
+          folder: ./dist/ngx-laydate
