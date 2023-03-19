@@ -33,19 +33,192 @@
                    <div class="content-data">
 
 <h1 id="ngxlaydate">NgxLaydate</h1>
-<p>This project was generated with <a href="https://github.com/angular/angular-cli">Angular CLI</a> version 10.2.3.</p>
-<h2 id="development-server">Development server</h2>
-<p>Run <code>ng serve</code> for a dev server. Navigate to <code>http://localhost:4200/</code>. The app will automatically reload if you change any of the source files.</p>
-<h2 id="code-scaffolding">Code scaffolding</h2>
-<p>Run <code>ng generate component component-name</code> to generate a new component. You can also use <code>ng generate directive|pipe|service|class|guard|interface|enum|module</code>.</p>
-<h2 id="build">Build</h2>
-<p>Run <code>ng build</code> to build the project. The build artifacts will be stored in the <code>dist/</code> directory. Use the <code>--prod</code> flag for a production build.</p>
-<h2 id="running-unit-tests">Running unit tests</h2>
-<p>Run <code>ng test</code> to execute the unit tests via <a href="https://karma-runner.github.io">Karma</a>.</p>
-<h2 id="running-end-to-end-tests">Running end-to-end tests</h2>
-<p>Run <code>ng e2e</code> to execute the end-to-end tests via <a href="http://www.protractortest.org/">Protractor</a>.</p>
-<h2 id="further-help">Further help</h2>
-<p>To get more help on the Angular CLI use <code>ng help</code> or go check out the <a href="https://angular.io/cli">Angular CLI Overview and Command Reference</a> page.</p>
+<!-- Badges section here. -->
+
+<p align="center">
+  <a href="https://travis-ci.com/"><img src="https://travis-ci.com/lanxuexing/ngx-laydate.svg?branch=main" alt="Build Status"></a>
+  <a href="https://npmcharts.com/compare/ngx-laydate?minimal=true"><img src="https://img.shields.io/npm/dm/ngx-laydate.svg?sanitize=true" alt="Downloads"></a>
+  <a href="https://www.npmjs.com/package/ngx-laydate"><img src="https://img.shields.io/npm/v/ngx-laydate.svg?sanitize=true" alt="Version"></a>
+  <a href="https://www.npmjs.com/package/ngx-laydate"><img src="https://img.shields.io/npm/l/ngx-laydate.svg?sanitize=true" alt="License"></a>
+</p>
+
+<p>Angular directive for <a href="https://github.com/layui/laydate">Laydate</a> (version &gt;= 5.x)</p>
+<ul>
+<li><a href="https://lanxuexing.github.io/ngx-laydate">Online Demo</a></li>
+<li><a href="https://lanxuexing.github.io/ngx-laydate/api-docs">Online Docs</a></li>
+<li><a href="https://layui.gitee.io/v2/demo/laydate.html">Laydate Online Demo</a></li>
+<li><a href="https://layui.gitee.io/v2/docs/modules/laydate.html">Laydate Online Docs</a></li>
+</ul>
+<h2 id="table-of-contents">Table of contents</h2>
+<ul>
+<li><a href="#getting-started">Getting Started</a></li>
+<li><a href="#installation">Installation</a></li>
+<li><a href="#usage">Usage</a></li>
+<li><a href="#api">API</a><ul>
+<li><a href="#directive">Directive</a></li>
+<li><a href="#laydate-instance">Laydate Instance</a></li>
+</ul>
+</li>
+<li><a href="#events">Events</a></li>
+<li><a href="#demo">Demo</a></li>
+</ul>
+<h1 id="getting-started">Getting Started</h1>
+<p><code>ngx-laydate</code> is an Angular (ver &gt;= 2.x) directive for Laydate (ver &gt;= 5.x).</p>
+<p>Latest version @npm:</p>
+<ul>
+<li><code>v1.x</code> for Angular &gt;= 2.x</li>
+</ul>
+<h1 id="installation">Installation</h1>
+<div><pre class="line-numbers"><code class="language-bash"># if you use npm
+npm install layui-laydate -S
+npm install ngx-laydate -S
+
+# or if you use yarn
+yarn add layui-laydate
+yarn add ngx-laydate</code></pre></div><h1 id="usage">Usage</h1>
+<p>Please refer to the <a href="https://lanxuexing.github.io/ngx-laydate">demo</a> page.</p>
+<ol>
+<li><p>Firstly, import <code>NgxLaydateModule</code> in your app module (or any other proper angular module):</p>
+<div><pre class="line-numbers"><code class="language-typescript">import { NgxLaydateModule } from &#39;ngx-laydate&#39;;
+
+&#64;NgModule({
+  imports: [
+    NgxLaydateModule.forRoot({
+      /**
+       * This will import all modules from laydate.
+       * If you only need custom modules,
+       * please refer to [Custom Build] section.
+       */
+      laydate: () =&gt; import(&#39;layui-laydate&#39;), // or import path-to-my-custom-laydate&#39;)
+      path: &#39;assets/laydate/&#39;, // or import path-to-my-custom-laydate&#39;)
+    }),
+  ],
+})
+export class AppModule {}</code></pre></div></li>
+<li><p>Then: configure assets in the <code>angular.json</code> file.</p>
+</li>
+</ol>
+<div><pre class="line-numbers"><code class="language-vim">{
+  architect: {
+    ...(PS: build -&gt; options)
+        assets: [
+          {
+            &quot;glob&quot;: &quot;**/*&quot;,
+            &quot;input&quot;: &quot;node_modules/layui-laydate/dist/&quot;,
+            &quot;output&quot;: &quot;assets/laydate&quot;
+          }
+        ]
+  }
+}</code></pre></div><ol start="3">
+<li><p>Then: use <code>laydate</code> directive in a input element</p>
+<ul>
+<li><p>Simple example:</p>
+<ul>
+<li>html:</li>
+</ul>
+<div><pre class="line-numbers"><code class="language-html">&lt;input laydate [options]=&quot;laydateOption&quot; /&gt;</code></pre></div><ul>
+<li>component:</li>
+</ul>
+<div><pre class="line-numbers"><code class="language-typescript">
+// ...
+
+laydateOption = {
+  lang: &#39;en&#39;,
+  value: &#39;1989-10-14&#39;,
+  done: (value, date, endDate) =&gt; {
+   // Get the generated value of the date, for example: 2017-08-18
+   console.log(value);seconds: 0}
+   // Get the date time object: {year: 2017, month: 8, date: 18, hours: 0, minutes: 0, seconds: 0}
+   console.log(date);
+   // Get the end date time object, only returns when range selection is enabled (range: true). The object members are the same as above.
+   console.log(endDate);
+ }
+};</code></pre></div></li>
+</ul>
+</li>
+</ol>
+<h1 id="api">API</h1>
+<h3 id="directive">Directive</h3>
+<p><code>laydate</code> directive support following input properties:</p>
+<table class="table table-bordered compodoc-table">
+<thead>
+<tr>
+<th>Input</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>[options]</code></td>
+<td>object</td>
+<td>null</td>
+<td>The same as the options on the official demo site.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="laydate-instance">Laydate Instance</h3>
+<p>For example:</p>
+<ul>
+<li>html:</li>
+</ul>
+<div><pre class="line-numbers"><code class="language-html">&lt;input laydate [options]=&quot;laydateOptions&quot; # /&gt;</code></pre></div><ul>
+<li>component:</li>
+</ul>
+<div><pre class="line-numbers"><code class="language-typescript"></code></pre></div><h1 id="events">Events</h1>
+<p>As Laydate supports the <code>&#39;click&#39;</code> events, our <code>ngx-laydate</code> directive also supports the same click events but with an additional <code>laydate</code> prefix. For example:</p>
+<ul>
+<li>html:</li>
+</ul>
+<div><pre class="line-numbers"><code class="language-html">&lt;input laydate [options]=&quot;laydateOptions&quot; (laydateDone)=&quot;onDone($event)&quot; /&gt;</code></pre></div><ul>
+<li>typescript:</li>
+</ul>
+<div><pre class="line-numbers"><code class="language-typescript">onDone([value, date]): void {
+  alert(&#39;You have selected the date: &#39; + value + &#39;\nThe obtained object is &#39; + JSON.stringify(date));
+}</code></pre></div><ul>
+<li>The &#39;$event&#39; is same with the &#39;params&#39; that Laydate dispatches.</li>
+</ul>
+<p>It supports following event outputs:</p>
+<table class="table table-bordered compodoc-table">
+<thead>
+<tr>
+<th>@Output</th>
+<th>Event</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>laydateInit</td>
+<td>Emitted when the laydate is initialized</td>
+</tr>
+<tr>
+<td>laydateReady</td>
+<td>laydate event: <code>&#39;ready&#39;</code></td>
+</tr>
+<tr>
+<td>laydateChange</td>
+<td>laydate event: <code>&#39;done&#39;</code></td>
+</tr>
+<tr>
+<td>laydateDone</td>
+<td>laydate event: <code>&#39;change&#39;</code></td>
+</tr>
+<tr>
+<td>laydateClose</td>
+<td>laydate event: <code>&#39;close&#39;</code></td>
+</tr>
+</tbody>
+</table>
+<p>You can refer to the Laydate tutorial: <a href="https://layui.gitee.io/v2/docs/modules/laydate.html">Events and Actions in Laydate</a> for more details of the event params. You can also refer to the <a href="https://lanxuexing.github.io/ngx-laydate/">demo</a> page for a detailed example.</p>
+<h1 id="demo">Demo</h1>
+<p>You can clone this repo to your working copy and then launch the demo page in your local machine:</p>
+<div><pre class="line-numbers"><code class="language-bash">npm install
+npm run start
+
+# or
+yarn install
+yarn start</code></pre></div><p>The demo page server is listening on: <a href="http://localhost:4200">http://localhost:4200</a></p>
 
 
 
