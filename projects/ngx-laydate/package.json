@@ -17,6 +17,7 @@
     "type": "git",
     "url": "https://github.com/lanxuexing/ngx-laydate.git"
   },
+  "homepage": "https://lanxuexing.github.io/ngx-laydate",
   "bugs": "https://github.com/lanxuexing/ngx-laydate/issues",
   "dependencies": {
     "tslib": "^2.0.0"
