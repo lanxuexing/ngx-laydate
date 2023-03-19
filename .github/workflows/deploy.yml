@@ -18,5 +18,4 @@ jobs:
         run: npm install
       - name: Build and Deploy
         run: |
-          ng build example --prod --output-path docs --base-href /ngx-laydate/
-          ngh --dir=docs --no-silent
+          npm run build:deploy
