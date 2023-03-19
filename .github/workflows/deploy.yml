@@ -1,4 +1,4 @@
-name: Ngx-Laydate Deploy CI/CD
+name: Deploy to Github Pages CI/CD
 
 on:
   push:

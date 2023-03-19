@@ -7,7 +7,7 @@
     "build": "ng build",
     "build:docs": "ng build example --prod --output-path docs --base-href /ngx-laydate/",
     "build:ghpages": "npx angular-cli-ghpages --dir docs",
-    "build:deploy": "run-p build:docs build:ghpages",
+    "build:deploy": "run-s build:docs build:ghpages",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
