@@ -137,7 +137,7 @@ For example:
 - html:
 
 ```html
-<input laydate [options]="laydateOptions" # />
+<input laydate [options]="laydateOptions" #myLaydate="laydate" />
 ```
 
 - component:

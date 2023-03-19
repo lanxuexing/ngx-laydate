@@ -10,11 +10,12 @@
     "build:lib:prod": "ng build ngx-laydate --prod",
     "update:readme": "cpr README.md dist/ngx-laydate/README.md -o",
     "build:dist": "run-s clean build:lib:prod update:readme",
+    "clean:docs": "rm -rf docs",
     "build:docs": "ng build example --prod --output-path docs --base-href /ngx-laydate/",
     "build:compodoc": "compodoc -p projects/ngx-laydate/tsconfig.lib.json -d docs/api-docs --theme stripe",
     "build:ghpages": "npx angular-cli-ghpages --dir dist/example",
     "build:deploy": "run-s clean build:docs build:compodoc build:ghpages",
-    "build:ci": "run-s clean build:docs build:compodoc",
+    "build:ci": "run-s clean:docs build:docs build:compodoc",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
