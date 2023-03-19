@@ -8,6 +8,8 @@
     "ng",
     "ngx",
     "laydate",
+    "timepicker",
+    "datepicker",
     "ngx-laydate",
     "layui-laydate"
   ],
