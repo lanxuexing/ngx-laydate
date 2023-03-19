@@ -143,7 +143,15 @@ For example:
 - component:
 
 ```typescript
+@ViewChild('myLaydate', { static: true, read: NgxLaydateDirective }) myLaydateRef: NgxLaydateDirective;
 
+this.options = {
+  min: '2016-10-14',
+  max: '2080-10-14',
+  ready: () => {
+    this.myLaydateRef.hint('Date selection is set within the range of <br> October 14, 2016 to October 14, 2080.');
+  }
+}
 ```
 
 # Events
