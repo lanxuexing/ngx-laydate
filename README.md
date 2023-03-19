@@ -3,7 +3,7 @@
 <!-- Badges section here. -->
 
 <p align="center">
-  <a href="https://travis-ci.com/"><img src="https://travis-ci.com/lanxuexing/ngx-laydate.svg?branch=main" alt="Build Status"></a>
+  <a href="https://github.com/lanxuexing/ngx-laydate/actions"><img src="https://github.com/lanxuexing/ngx-laydate/workflows/build/badge.svg?branch=main" alt="Build Status"></a>
   <a href="https://npmcharts.com/compare/ngx-laydate?minimal=true"><img src="https://img.shields.io/npm/dm/ngx-laydate.svg?sanitize=true" alt="Downloads"></a>
   <a href="https://www.npmjs.com/package/ngx-laydate"><img src="https://img.shields.io/npm/v/ngx-laydate.svg?sanitize=true" alt="Version"></a>
   <a href="https://www.npmjs.com/package/ngx-laydate"><img src="https://img.shields.io/npm/l/ngx-laydate.svg?sanitize=true" alt="License"></a>
