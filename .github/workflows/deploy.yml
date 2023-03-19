@@ -11,11 +11,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Set up Node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2
         with:
           node-version: '14.x'
       - name: Install Dependencies
         run: npm install
       - name: Build and Deploy
-        run: |
-          npm run build:deploy
+        run: npm run build:deploy
