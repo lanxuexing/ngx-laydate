@@ -14,7 +14,6 @@
     "build:compodoc": "compodoc -p projects/ngx-laydate/tsconfig.lib.json -d docs/api-docs --theme stripe",
     "build:ghpages": "npx angular-cli-ghpages --dir dist/example",
     "build:deploy": "run-s clean build:docs build:compodoc build:ghpages",
-    "build:deploy2": "run-s clean build:docs build:compodoc",
     "build:ci": "run-s clean build:docs build:compodoc",
     "test": "ng test",
     "lint": "ng lint",
