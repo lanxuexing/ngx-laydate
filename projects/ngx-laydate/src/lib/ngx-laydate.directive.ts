@@ -86,10 +86,10 @@ export class NgxLaydateDirective implements OnChanges, OnDestroy, AfterViewInit 
         this.laydateIns = this.ngLaydate.render({
           // The four common callbacks for the control, if the corresponding event callback function is registered in the options, it will override the plugin's own EventEmitter.
           // docs: https://layui.gitee.io/v2/docs/modules/laydate.html#onready
-          ready: (data: any) => this.ngZone.run(() => this.laydateReady.emit(data)),
-          change: (data: any) => this.ngZone.run(() => this.laydateChange.emit(data)),
-          done: (data: any) => this.ngZone.run(() => this.laydateDone.emit(data)),
-          close: (data: any) => this.ngZone.run(() => this.laydateClose.emit(data)),
+          ready: (...agrs: any) => this.ngZone.run(() => this.laydateReady.emit(agrs)),
+          change: (...agrs: any) => this.ngZone.run(() => this.laydateChange.emit(agrs)),
+          done: (...agrs: any) => this.ngZone.run(() => this.laydateDone.emit(agrs)),
+          close: (...agrs: any) => this.ngZone.run(() => this.laydateClose.emit(agrs)),
           ...option
         });
       } catch (e) {
@@ -120,9 +120,9 @@ export class NgxLaydateDirective implements OnChanges, OnDestroy, AfterViewInit 
   }
 
   private async onOptionsChange(opt: any) {
-    if (!opt) {
-      return;
-    }
+    // if (!opt) {
+    //   return;
+    // }
 
     if (this.ngLaydate) {
       this.setOption(this.options);
