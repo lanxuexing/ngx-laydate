@@ -7,9 +7,9 @@
     "build": "ng build",
     "clean:docs": "rm -rf docs",
     "build:docs": "ng build example --prod --output-path docs --base-href /ngx-laydate/",
+    "build:compodoc": "compodoc -p projects/ngx-laydate/tsconfig.lib.json -d docs/api-docs --theme stripe",
     "build:ghpages": "npx angular-cli-ghpages --dir docs",
-    "build:deploy": "run-s build:docs compodoc build:ghpages",
-    "compodoc": "compodoc -p projects/ngx-laydate/tsconfig.lib.json -d docs/api-docs --theme stripe",
+    "build:deploy": "run-s clean:docs build:docs build:compodoc build:ghpages",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
