@@ -74,12 +74,29 @@
                 "glob": "**/*",
                 "input": "node_modules/layui-laydate/dist/",
                 "output": "assets/laydate"
+              },
+              {
+                "glob": "**/*",
+                "input": "./node_modules/@ant-design/icons-angular/src/inline-svg/",
+                "output": "/assets/"
               }
             ],
             "styles": [
-              "projects/example/src/styles.scss"
+              "node_modules/ng-zorro-antd/ng-zorro-antd.min.css",
+              "projects/example/src/styles.scss",
+              "projects/example/src/assets/prism-one-dark.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/marked/marked.min.js",
+              "node_modules/prismjs/prism.js",
+              "node_modules/prismjs/components/prism-markup.min.js",
+              "node_modules/prismjs/components/prism-css.min.js",
+              "node_modules/prismjs/components/prism-scss.min.js",
+              "node_modules/prismjs/components/prism-typescript.min.js",
+              "node_modules/prismjs/components/prism-javascript.min.js",
+              "node_modules/prismjs/components/prism-bash.min.js",
+              "node_modules/prismjs/components/prism-diff.min.js"
+            ]
           },
           "configurations": {
             "production": {

@@ -1,0 +1,15 @@
+<!-- DEMO START -->
+Selected: <input laydate [options]="options_selected" />
+
+Toggle: <input laydate [options]="options_toggle" />
+
+NgSelected: <input laydate (laydateDone)="onDone($event)" />
+
+NgToogle: <input laydate (laydateChange)="onChange($event)" />
+
+<!-- DEMO END -->
+
+<code-block
+  [html]="html"
+  [component]="component">
+</code-block>

@@ -6,11 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title = 'example';
+  isCollapsed = false;
   date: '2021-09-12';
   options = {}
-  date2: any;
-  options2 = {}
 
   ngOnInit(): void {
     this.options = {
