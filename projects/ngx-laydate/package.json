@@ -1,6 +1,6 @@
 {
   "name": "ngx-laydate",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "author": "lanxuexing",
   "license": "MIT",
   "keywords": [
@@ -11,8 +11,18 @@
     "timepicker",
     "datepicker",
     "ngx-laydate",
-    "layui-laydate"
+    "layui-laydate",
+    "ivy",
+    "angular8",
+    "angular9",
+    "angular10",
+    "angular11",
+    "angular12",
+    "angular13",
+    "angular14",
+    "angular15"
   ],
+  "description": "An angular (ver >= 2.x) directive for Laydate (ver >= 5.x) 🚀",
   "repository": {
     "type": "git",
     "url": "https://github.com/lanxuexing/ngx-laydate.git"
