@@ -33,6 +33,8 @@ Angular directive for [Laydate](https://github.com/layui/laydate) (version >= 5.
 
 Latest version @npm:
 
+- `v11.x` for Angular >= 11
+- `v10.x` for Angular >= 10
 - `v1.x` for Angular >= 2.x
 
 # Installation
@@ -63,7 +65,10 @@ Please refer to the [demo](https://lanxuexing.github.io/ngx-laydate) page.
           * This will import all modules from laydate.
           * If you only need custom modules,
           * please refer to [Custom Build] section.
+          * PS: Angular Version >= 11 need @ts-ignore or src/types/index.d.ts(declare module 'layui-laydate')
+          * Issues Link: https://stackoverflow.com/questions/41292559/could-not-find-a-declaration-file-for-module-module-name-path-to-module-nam
           */
+         // @ts-ignore
          laydate: () => import('layui-laydate'), // or import path-to-my-custom-laydate')
          path: 'assets/laydate/', // or import path-to-my-custom-laydate')
        }),
