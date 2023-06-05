@@ -67,8 +67,13 @@
           imports: [
             ...,
             NgxLaydateModule.forRoot({{'{'}}
-              laydate: () => import('layui-laydate'),
-              path: 'assets/laydate/'
+            /**
+             * PS: Angular Version >= 11 need @ts-ignore or src/types/index.d.ts(declare module 'layui-laydate')
+             * Issues Link: https://stackoverflow.com/questions/41292559/could-not-find-a-declaration-file-for-module-module-name-path-to-module-nam
+             */
+             // @ts-ignore
+             laydate: () => import('layui-laydate'), // or import path-to-my-custom-laydate')
+             path: 'assets/laydate/', // or import path-to-my-custom-laydate')
             })
           ],
         })
