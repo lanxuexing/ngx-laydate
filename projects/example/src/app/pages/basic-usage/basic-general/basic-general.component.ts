@@ -14,6 +14,7 @@ export class BasicGeneralComponent implements OnInit {
     lang: 'en'
   };
   options_default = {
+    lang: 'en',
     value: '1989-10-14'
   }
 

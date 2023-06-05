@@ -13,10 +13,12 @@ export class BasicLimitComponent implements OnInit {
   @ViewChild('myLaydate', { static: true, read: NgxLaydateDirective }) myLaydateRef: NgxLaydateDirective;
   options = {};
   options_day = {
+    lang: 'en',
     min: -7,
     max: 7
   };
   options_time = {
+    lang: 'en',
     type: 'time',
     min: '09:30:00',
     max: '17:30:00',

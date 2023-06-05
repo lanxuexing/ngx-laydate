@@ -10,15 +10,20 @@ export class BasicCustomComponent implements OnInit {
   html = require('!!html-loader?{"minimize": {"removeComments":false,"caseSensitive":true}}!./basic-custom.component.html'); // DEMO IGNORE
   component = require('!!raw-loader!./basic-custom.component.ts').default; // DEMO IGNORE
   options_no_bottom_bar = {
+    lang: 'en',
     showBottom: false
   };
   options_only_confirm = {
+    lang: 'en',
     btns: ['confirm']
   };
   options_read_only = {
+    lang: 'en',
     trigger: 'click'
   };
-  options_not_input = {};
+  options_not_input = {
+    lang: 'en',
+  };
 
   constructor() { }
 

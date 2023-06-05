@@ -10,9 +10,11 @@ export class BasicOthenComponent implements OnInit {
   html = require('!!html-loader?{"minimize": {"removeComments":false,"caseSensitive":true}}!./basic-othen.component.html'); // DEMO IGNORE
   component = require('!!raw-loader!./basic-othen.component.ts').default; // DEMO IGNORE
   options_custom_event = {
+    lang: 'en',
     trigger: 'mouseover'
   };
   options_click_to_trigger = {
+    lang: 'en',
     eventElem: '#test',
     trigger: 'click'
   };

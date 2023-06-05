@@ -10,6 +10,7 @@ export class BasicMarkComponent implements OnInit {
   html = require('!!html-loader?{"minimize": {"removeComments":false,"caseSensitive":true}}!./basic-mark.component.html'); // DEMO IGNORE
   component = require('!!raw-loader!./basic-mark.component.ts').default; // DEMO IGNORE
   options_enable_gregorian_festival = {
+    lang: 'en',
     calendar: true
   };
   options_custom_important_dates = {
