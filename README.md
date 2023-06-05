@@ -127,6 +127,36 @@ Please refer to the [demo](https://lanxuexing.github.io/ngx-laydate) page.
      };
      ```
 
+🚀 **standalone component**
+
+When using NgxLaydateModule in a standalone component, we can use token NGX_LAYDATE_CONFIG to provide laydate
+
+```ts
+import { NgxLaydateModule, NGX_LAYDATE_CONFIG } from 'ngx-laydate';
+
+@Component({
+  standalone: true,
+  selector: 'my-laydate',
+  template: `
+    <input laydate [options]="{}" />
+  `,
+  imports: [NgxLaydateModule],
+  providers: [
+    {
+      provide: NGX_LAYDATE_CONFIG,
+      useFactory: () => ({
+        // @ts-ignore
+        laydate: () => import('layui-laydate'),
+        path: 'assets/laydate/'
+      }),
+    },
+  ]
+})
+export class MyLaydateComponent {
+  // logic
+}
+```
+
 # API
 
 ### Directive
