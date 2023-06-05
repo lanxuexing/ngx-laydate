@@ -144,7 +144,31 @@ laydateOption = {
 </ul>
 </li>
 </ol>
-<h1 id="api">API</h1>
+<p>🚀 <strong>standalone component</strong></p>
+<p>When using NgxLaydateModule in a standalone component, we can use token NGX_LAYDATE_CONFIG to provide laydate</p>
+<div><pre class="line-numbers"><code class="language-ts">import { NgxLaydateModule, NGX_LAYDATE_CONFIG } from &#39;ngx-laydate&#39;;
+
+&#64;Component({
+  standalone: true,
+  selector: &#39;my-laydate&#39;,
+  template: `
+    &lt;input laydate [options]=&quot;{}&quot; /&gt;
+  `,
+  imports: [NgxLaydateModule],
+  providers: [
+    {
+      provide: NGX_LAYDATE_CONFIG,
+      useFactory: () =&gt; ({
+        // &#64;ts-ignore
+        laydate: () =&gt; import(&#39;layui-laydate&#39;),
+        path: &#39;assets/laydate/&#39;
+      }),
+    },
+  ]
+})
+export class MyLaydateComponent {
+  // logic
+}</code></pre></div><h1 id="api">API</h1>
 <h3 id="directive">Directive</h3>
 <p><code>laydate</code> directive support following input properties:</p>
 <table class="table table-bordered compodoc-table">
