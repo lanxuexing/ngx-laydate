@@ -14,7 +14,7 @@
     </head>
     <body>
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
             <a href="./" class="navbar-brand">ngx-laydate documentation</a>
             <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
         </div>
@@ -32,7 +32,7 @@
                <div class="content getting-started">
                    <div class="content-data">
 
-<h1 id="ngxlaydate">NgxLaydate</h1>
+<h1>NgxLaydate</h1>
 <!-- Badges section here. -->
 
 <p align="center">
@@ -49,7 +49,7 @@
 <li><a href="https://layui.gitee.io/v2/demo/laydate.html">Laydate Online Demo</a></li>
 <li><a href="https://layui.gitee.io/v2/docs/modules/laydate.html">Laydate Online Docs</a></li>
 </ul>
-<h2 id="table-of-contents">Table of contents</h2>
+<h2>Table of contents</h2>
 <ul>
 <li><a href="#getting-started">Getting Started</a></li>
 <li><a href="#installation">Installation</a></li>
@@ -62,7 +62,7 @@
 <li><a href="#events">Events</a></li>
 <li><a href="#demo">Demo</a></li>
 </ul>
-<h1 id="getting-started">Getting Started</h1>
+<h1>Getting Started</h1>
 <p><code>ngx-laydate</code> is an Angular (ver &gt;= 2.x) directive for Laydate (ver &gt;= 5.x).</p>
 <p>Latest version @npm:</p>
 <ul>
@@ -75,14 +75,14 @@
 <li><code>v10.x</code> for Angular &gt;= 10</li>
 <li><code>v1.x</code> for Angular &gt;= 2.x</li>
 </ul>
-<h1 id="installation">Installation</h1>
+<h1>Installation</h1>
 <div><pre class="line-numbers"><code class="language-bash"># if you use npm
 npm install layui-laydate -S
 npm install ngx-laydate -S
 
 # or if you use yarn
 yarn add layui-laydate
-yarn add ngx-laydate</code></pre></div><h1 id="usage">Usage</h1>
+yarn add ngx-laydate</code></pre></div><h1>Usage</h1>
 <p>Please refer to the <a href="https://lanxuexing.github.io/ngx-laydate">demo</a> page.</p>
 <ol>
 <li><p>Firstly, import <code>NgxLaydateModule</code> in your app module (or any other proper angular module):</p>
@@ -171,8 +171,8 @@ laydateOption = {
 })
 export class MyLaydateComponent {
   // logic
-}</code></pre></div><h1 id="api">API</h1>
-<h3 id="directive">Directive</h3>
+}</code></pre></div><h1>API</h1>
+<h3>Directive</h3>
 <p><code>laydate</code> directive support following input properties:</p>
 <table class="table table-bordered compodoc-table">
 <thead>
@@ -192,7 +192,7 @@ export class MyLaydateComponent {
 </tr>
 </tbody>
 </table>
-<h3 id="laydate-instance">Laydate Instance</h3>
+<h3>Laydate Instance</h3>
 <p>For example:</p>
 <ul>
 <li>html:</li>
@@ -208,7 +208,7 @@ this.options = {
   ready: () =&gt; {
     this.myLaydateRef.hint(&#39;Date selection is set within the range of &lt;br&gt; October 14, 2016 to October 14, 2080.&#39;);
   }
-}</code></pre></div><h1 id="events">Events</h1>
+}</code></pre></div><h1>Events</h1>
 <p>As Laydate supports the <code>&#39;click&#39;</code> events, our <code>ngx-laydate</code> directive also supports the same click events but with an additional <code>laydate</code> prefix. For example:</p>
 <ul>
 <li>html:</li>
@@ -253,7 +253,7 @@ this.options = {
 </tbody>
 </table>
 <p>You can refer to the Laydate tutorial: <a href="https://layui.gitee.io/v2/docs/modules/laydate.html">Events and Actions in Laydate</a> for more details of the event params. You can also refer to the <a href="https://lanxuexing.github.io/ngx-laydate/">demo</a> page for a detailed example.</p>
-<h1 id="demo">Demo</h1>
+<h1>Demo</h1>
 <p>You can clone this repo to your working copy and then launch the demo page in your local machine:</p>
 <div><pre class="line-numbers"><code class="language-bash">npm install
 npm run start
