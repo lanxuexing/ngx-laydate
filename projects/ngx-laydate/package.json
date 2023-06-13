@@ -1,6 +1,6 @@
 {
   "name": "ngx-laydate",
-  "version": "15.0.0",
+  "version": "16.0.0",
   "author": "lanxuexing",
   "license": "MIT",
   "keywords": [
@@ -20,7 +20,8 @@
     "angular12",
     "angular13",
     "angular14",
-    "angular15"
+    "angular15",
+    "angular16"
   ],
   "description": "An angular (ver >= 2.x) directive for Laydate (ver >= 5.x) 🚀",
   "repository": {
