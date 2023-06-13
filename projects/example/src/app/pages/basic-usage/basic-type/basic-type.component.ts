@@ -7,7 +7,7 @@ declare const require: any; // DEMO IGNORE
   styleUrls: ['./basic-type.component.scss'],
 })
 export class BasicTypeComponent implements OnInit {
-  html = require('!!html-loader?{"minimize": {"removeComments":false,"caseSensitive":true}}!./basic-type.component.html'); // DEMO IGNORE
+  html = require('!!html-loader?{"minimize": {"removeComments":false,"caseSensitive":true}}!./basic-type.component.html').default; // DEMO IGNORE
   component = require('!!raw-loader!./basic-type.component.ts').default; // DEMO IGNORE
   options_year = {
     lang: 'en',

@@ -7,7 +7,7 @@ declare const require: any; // DEMO IGNORE
   styleUrls: ['./basic-othen.component.scss'],
 })
 export class BasicOthenComponent implements OnInit {
-  html = require('!!html-loader?{"minimize": {"removeComments":false,"caseSensitive":true}}!./basic-othen.component.html'); // DEMO IGNORE
+  html = require('!!html-loader?{"minimize": {"removeComments":false,"caseSensitive":true}}!./basic-othen.component.html').default; // DEMO IGNORE
   component = require('!!raw-loader!./basic-othen.component.ts').default; // DEMO IGNORE
   options_custom_event = {
     lang: 'en',

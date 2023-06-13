@@ -8,7 +8,7 @@ declare const require: any; // DEMO IGNORE
   styleUrls: ['./basic-limit.component.scss'],
 })
 export class BasicLimitComponent implements OnInit {
-  html = require('!!html-loader?{"minimize": {"removeComments":false,"caseSensitive":true}}!./basic-limit.component.html'); // DEMO IGNORE
+  html = require('!!html-loader?{"minimize": {"removeComments":false,"caseSensitive":true}}!./basic-limit.component.html').default; // DEMO IGNORE
   component = require('!!raw-loader!./basic-limit.component.ts').default; // DEMO IGNORE
   @ViewChild('myLaydate', { static: true, read: NgxLaydateDirective }) myLaydateRef: NgxLaydateDirective;
   options = {};

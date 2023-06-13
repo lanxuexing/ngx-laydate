@@ -7,7 +7,7 @@ declare const require: any; // DEMO IGNORE
   styleUrls: ['./basic-event.component.scss'],
 })
 export class BasicEventComponent implements OnInit {
-  html = require('!!html-loader?{"minimize": {"removeComments":false,"caseSensitive":true}}!./basic-event.component.html'); // DEMO IGNORE
+  html = require('!!html-loader?{"minimize": {"removeComments":false,"caseSensitive":true}}!./basic-event.component.html').default; // DEMO IGNORE
   component = require('!!raw-loader!./basic-event.component.ts').default; // DEMO IGNORE
   options_selected = {
     lang: 'en',

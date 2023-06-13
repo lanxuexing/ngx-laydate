@@ -7,7 +7,7 @@ declare const require: any; // DEMO IGNORE
   styleUrls: ['./basic-format.component.scss'],
 })
 export class BasicFormatComponent implements OnInit {
-  html = require('!!html-loader?{"minimize": {"removeComments":false,"caseSensitive":true}}!./basic-format.component.html'); // DEMO IGNORE
+  html = require('!!html-loader?{"minimize": {"removeComments":false,"caseSensitive":true}}!./basic-format.component.html').default; // DEMO IGNORE
   component = require('!!raw-loader!./basic-format.component.ts').default; // DEMO IGNORE
   options_year = {
     lang: 'en',

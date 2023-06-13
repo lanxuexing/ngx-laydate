@@ -169,6 +169,6 @@
           }
         }
       }
-    }},
-  "defaultProject": "ngx-laydate"
+    }
+  }
 }

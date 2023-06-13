@@ -7,7 +7,7 @@ declare const require: any; // DEMO IGNORE
   styleUrls: ['./basic-range.component.scss'],
 })
 export class BasicRangeComponent implements OnInit {
-  html = require('!!html-loader?{"minimize": {"removeComments":false,"caseSensitive":true}}!./basic-range.component.html'); // DEMO IGNORE
+  html = require('!!html-loader?{"minimize": {"removeComments":false,"caseSensitive":true}}!./basic-range.component.html').default; // DEMO IGNORE
   component = require('!!raw-loader!./basic-range.component.ts').default; // DEMO IGNORE
   options_year = {
     lang: 'en',

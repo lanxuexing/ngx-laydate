@@ -7,7 +7,7 @@ declare const require: any; // DEMO IGNORE
   styleUrls: ['./basic-general.component.scss'],
 })
 export class BasicGeneralComponent implements OnInit {
-  html = require('!!html-loader?{"minimize": {"removeComments":false,"caseSensitive":true}}!./basic-general.component.html'); // DEMO IGNORE
+  html = require('!!html-loader?{"minimize": {"removeComments":false,"caseSensitive":true}}!./basic-general.component.html').default; // DEMO IGNORE
   component = require('!!raw-loader!./basic-general.component.ts').default; // DEMO IGNORE
   options: any;
   options_en = {

@@ -7,7 +7,7 @@ declare const require: any; // DEMO IGNORE
   styleUrls: ['./basic-mark.component.scss'],
 })
 export class BasicMarkComponent implements OnInit {
-  html = require('!!html-loader?{"minimize": {"removeComments":false,"caseSensitive":true}}!./basic-mark.component.html'); // DEMO IGNORE
+  html = require('!!html-loader?{"minimize": {"removeComments":false,"caseSensitive":true}}!./basic-mark.component.html').default; // DEMO IGNORE
   component = require('!!raw-loader!./basic-mark.component.ts').default; // DEMO IGNORE
   options_enable_gregorian_festival = {
     lang: 'en',

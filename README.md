@@ -33,6 +33,7 @@ Angular directive for [Laydate](https://github.com/layui/laydate) (version >= 5.
 
 Latest version @npm:
 
+- `v14.x` for Angular >= 14
 - `v13.x` for Angular >= 13
 - `v12.x` for Angular >= 12
 - `v11.x` for Angular >= 11
