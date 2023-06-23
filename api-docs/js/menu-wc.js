@@ -64,13 +64,13 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="modules/NgxLaydateModule.html" data-type="entity-link" >NgxLaydateModule</a>
                                 <li class="chapter inner">
                                     <div class="simple menu-toggler" data-bs-toggle="collapse" ${ isNormalMode ?
-                                        'data-bs-target="#directives-links-module-NgxLaydateModule-50b1c2acbbefde5bb9d698817719fee827e2ba5e431c6aabc8a26b32a3240df73b99a0021f0960b6c6e54b1113b8cfd51abf2f23f99f1699e1e1fccd63221957"' : 'data-bs-target="#xs-directives-links-module-NgxLaydateModule-50b1c2acbbefde5bb9d698817719fee827e2ba5e431c6aabc8a26b32a3240df73b99a0021f0960b6c6e54b1113b8cfd51abf2f23f99f1699e1e1fccd63221957"' }>
+                                        'data-bs-target="#directives-links-module-NgxLaydateModule-49367852da48133c7a7b2834ef708899c3c51be97576c1418816799bd9e1626a6a4109870e60c65133bda320a9b98ead224fd60c10dd2462ae28e350981a0ff9"' : 'data-bs-target="#xs-directives-links-module-NgxLaydateModule-49367852da48133c7a7b2834ef708899c3c51be97576c1418816799bd9e1626a6a4109870e60c65133bda320a9b98ead224fd60c10dd2462ae28e350981a0ff9"' }>
                                         <span class="icon ion-md-code-working"></span>
                                         <span>Directives</span>
                                         <span class="icon ion-ios-arrow-down"></span>
                                     </div>
-                                    <ul class="links collapse" ${ isNormalMode ? 'id="directives-links-module-NgxLaydateModule-50b1c2acbbefde5bb9d698817719fee827e2ba5e431c6aabc8a26b32a3240df73b99a0021f0960b6c6e54b1113b8cfd51abf2f23f99f1699e1e1fccd63221957"' :
-                                        'id="xs-directives-links-module-NgxLaydateModule-50b1c2acbbefde5bb9d698817719fee827e2ba5e431c6aabc8a26b32a3240df73b99a0021f0960b6c6e54b1113b8cfd51abf2f23f99f1699e1e1fccd63221957"' }>
+                                    <ul class="links collapse" ${ isNormalMode ? 'id="directives-links-module-NgxLaydateModule-49367852da48133c7a7b2834ef708899c3c51be97576c1418816799bd9e1626a6a4109870e60c65133bda320a9b98ead224fd60c10dd2462ae28e350981a0ff9"' :
+                                        'id="xs-directives-links-module-NgxLaydateModule-49367852da48133c7a7b2834ef708899c3c51be97576c1418816799bd9e1626a6a4109870e60c65133bda320a9b98ead224fd60c10dd2462ae28e350981a0ff9"' }>
                                         <li class="link">
                                             <a href="directives/NgxLaydateDirective.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules" >NgxLaydateDirective</a>
                                         </li>

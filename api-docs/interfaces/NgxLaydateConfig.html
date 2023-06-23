@@ -196,10 +196,13 @@
   OnChanges,
   OnDestroy,
   Output,
-  SimpleChanges
+  SimpleChanges,
+  forwardRef
 } from &#x27;@angular/core&#x27;;
 import { ChangeFilter } from &#x27;./change-filter&#x27;;
 import { normalizeCommonJSImport } from &#x27;./utils&#x27;;
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from &#x27;@angular/forms&#x27;;
+import { Subject, takeUntil } from &#x27;rxjs&#x27;;
 
 export interface NgxLaydateConfig {
   laydate: any | (() &#x3D;&gt; Promise&lt;any&gt;);
@@ -208,12 +211,19 @@ export interface NgxLaydateConfig {
 
 export const NGX_LAYDATE_CONFIG &#x3D; new InjectionToken&lt;NgxLaydateConfig&gt;(&#x27;NGX_LAYDATE_CONFIG&#x27;);
 
+const NGX_LAYDATE_VALUE_ACCESSOR &#x3D; {
+  provide: NG_VALUE_ACCESSOR,
+  useExisting: forwardRef(() &#x3D;&gt; NgxLaydateDirective),
+  multi: true
+};
+
 @Directive({
   selector: &#x27;laydate, [laydate]&#x27;,
-  exportAs: &#x27;laydate&#x27;
+  exportAs: &#x27;laydate&#x27;,
+  providers: [NGX_LAYDATE_VALUE_ACCESSOR]
 })
-export class NgxLaydateDirective implements OnChanges, OnDestroy, AfterViewInit {
-  @Input() options: any;
+export class NgxLaydateDirective implements OnChanges, OnDestroy, AfterViewInit, ControlValueAccessor {
+  @Input() options: Partial&lt;any&gt; &#x3D; {};
 
   // ngx-laydate events
   @Output() laydateInit &#x3D; new EventEmitter&lt;any&gt;();
@@ -229,6 +239,14 @@ export class NgxLaydateDirective implements OnChanges, OnDestroy, AfterViewInit 
   private laydate: any;
   private laydateIns: any;
   private initLaydateTimer?: number;
+
+  // controlValueAccessor
+  private isNgModel &#x3D; false;
+  private currentValue &#x3D; &#x27;&#x27;;
+  private destroy$ &#x3D; new Subject&lt;void&gt;();
+  private ngLaydateCreated$ &#x3D; new Subject&lt;void&gt;();
+  private onChange: any &#x3D; () &#x3D;&gt; { };
+  private onTouched: any &#x3D; () &#x3D;&gt; { };
 
   constructor(
     @Inject(NGX_LAYDATE_CONFIG) public config: NgxLaydateConfig,
@@ -246,10 +264,38 @@ export class NgxLaydateDirective implements OnChanges, OnDestroy, AfterViewInit 
   ngOnDestroy() {
     window.clearTimeout(this.initLaydateTimer);
     this.dispose();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   ngAfterViewInit(): void {
-    this.initLaydateTimer &#x3D; window.setTimeout(() &#x3D;&gt; this.initChart());
+    this.initLaydateTimer &#x3D; window.setTimeout(() &#x3D;&gt; this.initLaydate());
+  }
+
+  writeValue(obj: any): void {
+    this.currentValue &#x3D; obj;
+  }
+
+  registerOnChange(fn: any): void {
+    this.isNgModel &#x3D; true;
+    this.onChange &#x3D; fn;
+    // delay execution until ngLaydate instance is created.
+    this.ngLaydateCreated$.asObservable().pipe(
+      takeUntil(this.destroy$)
+    ).subscribe(() &#x3D;&gt; {
+      this.setOption({ ...this.options, value: this.currentValue });
+    });
+  }
+
+  registerOnTouched(fn: any): void {
+    this.onTouched &#x3D; fn;
+  }
+
+  setDisabledState?(isDisabled: boolean): void {
+    const dom &#x3D; this.el.nativeElement;
+    if (dom &amp;&amp; dom.nodeName &#x3D;&#x3D;&#x3D; &#x27;INPUT&#x27;) {
+      dom.disabled &#x3D; isDisabled;
+    }
   }
 
   public hint(value: string) {
@@ -286,7 +332,7 @@ export class NgxLaydateDirective implements OnChanges, OnDestroy, AfterViewInit 
   }
 
   private createLaydate() {
-    const dom &#x3D; this.el.nativeElement;
+    const dom &#x3D; (this.options &amp;&amp; this.options.elem) || this.el.nativeElement;
 
     // here a bit tricky: we check if the laydate module is provided as function returning native import(&#x27;...&#x27;) then use the promise
     // otherwise create the function that imitates behaviour above with a provided as is module
@@ -295,27 +341,39 @@ export class NgxLaydateDirective implements OnChanges, OnDestroy, AfterViewInit 
         typeof this.laydate &#x3D;&#x3D;&#x3D; &#x27;function&#x27; ? this.laydate : () &#x3D;&gt; Promise.resolve(this.laydate);
 
       return normalizeCommonJSImport(load()).then((laydateInstance: any) &#x3D;&gt; {
-        this.options &#x3D; Object.assign({}, this.options, { elem: dom });
+        this.options &#x3D; Object.assign({}, this.options, {
+          elem: dom,
+          ...(this.isNgModel &amp;&amp; {
+            // intercept &#x27;done&#x27; callback of the control, continue event propagation when callback is present.
+            ...(this.options &amp;&amp; this.options.done &amp;&amp; { ngDone: this.options.done }),
+            done: (value, date, endDate) &#x3D;&gt; {
+              this.onChange(value);
+              if (this.options &amp;&amp; this.options.ngDone) {
+                this.options.ngDone(value, date, endDate);
+              }
+            }
+          })
+        });
         return laydateInstance;
       });
     });
   }
 
-  private async initChart() {
+  private async initLaydate() {
     await this.onOptionsChange(this.options);
   }
 
   private async onOptionsChange(opt: any) {
-    // if (!opt) {
-    //   return;
-    // }
-
     if (this.ngLaydate) {
       this.setOption(this.options);
     } else {
       this.ngLaydate &#x3D; await this.createLaydate();
       this.laydateInit.emit(this.ngLaydate);
-      this.setOption(this.options);
+      if (this.isNgModel) {
+        this.ngLaydateCreated$.next();
+      } else {
+        this.setOption(this.options);
+      }
     }
   }
 
