@@ -1,10 +1,11 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
-import { NgxLaydateConfig, NgxLaydateDirective, NGX_LAYDATE_CONFIG } from './ngx-laydate.directive';
+import { FormsModule } from '@angular/forms';
+import { NGX_LAYDATE_CONFIG, NgxLaydateConfig, NgxLaydateDirective } from './ngx-laydate.directive';
 
 @NgModule({
-  imports: [],
-  declarations: [ NgxLaydateDirective],
-  exports: [ NgxLaydateDirective]
+  imports: [FormsModule],
+  declarations: [NgxLaydateDirective],
+  exports: [NgxLaydateDirective]
 })
 export class NgxLaydateModule {
   static forRoot(config?: NgxLaydateConfig): ModuleWithProviders<NgxLaydateModule> {
@@ -20,4 +21,4 @@ export class NgxLaydateModule {
   }
 }
 
-export { NgxLaydateDirective, NGX_LAYDATE_CONFIG };
+export { NGX_LAYDATE_CONFIG, NgxLaydateDirective };
