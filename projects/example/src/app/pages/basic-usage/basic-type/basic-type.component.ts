@@ -15,6 +15,10 @@ export class BasicTypeComponent implements OnInit {
   options_month = {
     type: 'month'
   };
+  options_date = {
+    lang: 'en',
+    type: 'date'
+  };
   options_time = {
     type: 'time'
   };
