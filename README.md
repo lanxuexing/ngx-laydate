@@ -55,6 +55,10 @@ yarn add layui-laydate
 yarn add ngx-laydate
 ```
 
+:fire:TL;DR
+
+> To utilize the latest Laydate features, replace "layui-laydate" with "laydate-next" and update the asset dependencies in your "angular.json" file. Additionally, update the import for the "NgxLaydateModule" accordingly.
+
 # Usage
 
 Please refer to the [demo](https://lanxuexing.github.io/ngx-laydate) page.
@@ -108,6 +112,8 @@ Please refer to the [demo](https://lanxuexing.github.io/ngx-laydate) page.
      - html:
 
      ```html
+     <!-- Supports ngModel and formControlName -->
+
      <input laydate [options]="laydateOption" />
      ```
 

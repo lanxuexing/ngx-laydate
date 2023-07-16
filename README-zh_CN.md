@@ -55,6 +55,10 @@ yarn add layui-laydate
 yarn add ngx-laydate
 ```
 
+:fire:太长;不看
+
+> 如果你想使用最新的laydate新特性，可以使用laydate-next替换layui-laydate，同时更新angular.json assets和NgxLaydateModule import依赖
+
 # <p id='usage'>使用方法</p>
 
 请参考 [演示](https://lanxuexing.github.io/ngx-laydate) 页面。
@@ -107,6 +111,8 @@ yarn add ngx-laydate
      - html：
 
      ```html
+     <!-- 支持 ngModel 和 formControlName -->
+
      <input laydate [options]="laydateOption" />
      ```
 
