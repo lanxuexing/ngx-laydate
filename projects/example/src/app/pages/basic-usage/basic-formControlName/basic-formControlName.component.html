@@ -1,0 +1,14 @@
+<!-- DEMO START -->
+<form [formGroup]="form">
+  ngModel: <input laydate [options]="options" formControlName="myDate" />
+  
+  Select Result: <span>{{ form.get('myDate').value }}</span>
+</form>
+
+<!-- DEMO END -->
+
+
+<code-block
+  [html]="html"
+  [component]="component">
+</code-block>

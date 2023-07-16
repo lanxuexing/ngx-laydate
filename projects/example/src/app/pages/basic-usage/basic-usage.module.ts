@@ -12,6 +12,8 @@ import { BasicThemeComponent } from './basic-theme/basic-theme.component';
 import { BasicTypeComponent } from './basic-type/basic-type.component';
 import { BasicUsageRoutingModule } from './basic-usage.routing';
 import { BasicComponent } from './basic/basic.component';
+import { BasicNgModelComponent } from './basic-ngModel/basic-ngModel.component';
+import { BasicFormControlNameComponent } from './basic-formControlName/basic-formControlName.component';
 
 @NgModule({
   imports: [
@@ -30,6 +32,8 @@ import { BasicComponent } from './basic/basic.component';
     BasicCustomComponent,
     BasicMarkComponent,
     BasicOthenComponent,
+    BasicNgModelComponent,
+    BasicFormControlNameComponent,
   ],
   exports: [
     BasicComponent,
