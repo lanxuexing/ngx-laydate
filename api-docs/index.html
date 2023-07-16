@@ -82,7 +82,11 @@ npm install ngx-laydate -S
 
 # or if you use yarn
 yarn add layui-laydate
-yarn add ngx-laydate</code></pre></div><h1>Usage</h1>
+yarn add ngx-laydate</code></pre></div><p>:fire:TL;DR</p>
+<blockquote>
+<p>To utilize the latest Laydate features, replace &quot;layui-laydate&quot; with &quot;laydate-next&quot; and update the asset dependencies in your &quot;angular.json&quot; file. Additionally, update the import for the &quot;NgxLaydateModule&quot; accordingly.</p>
+</blockquote>
+<h1>Usage</h1>
 <p>Please refer to the <a href="https://lanxuexing.github.io/ngx-laydate">demo</a> page.</p>
 <ol>
 <li><p>Firstly, import <code>NgxLaydateModule</code> in your app module (or any other proper angular module):</p>
@@ -126,7 +130,9 @@ export class AppModule {}</code></pre></div></li>
 <ul>
 <li>html:</li>
 </ul>
-<div><pre class="line-numbers"><code class="language-html">&lt;input laydate [options]=&quot;laydateOption&quot; /&gt;</code></pre></div><ul>
+<div><pre class="line-numbers"><code class="language-html">&lt;!-- Supports ngModel and formControlName --&gt;
+
+&lt;input laydate [options]=&quot;laydateOption&quot; /&gt;</code></pre></div><ul>
 <li>component:</li>
 </ul>
 <div><pre class="line-numbers"><code class="language-typescript">
