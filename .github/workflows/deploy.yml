@@ -61,6 +61,16 @@ jobs:
         # 'build:dist' runs: clean, build:lib:prod, update:readme
         run: npm run build:dist
 
+      # 3️⃣ Publish Phase (Switch to Node 22 for OIDC support)
+      - name: Setup Node.js for Publish
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          registry-url: 'https://registry.npmjs.org'
+
+      # Verify npm version just in case
+      - run: npm --version
+
       - name: Determine Release Tag
         id: determine-tag
         run: |
