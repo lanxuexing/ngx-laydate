@@ -87,8 +87,3 @@ jobs:
             --tag ${{ steps.determine-tag.outputs.tag }} \
             --provenance \
             --access public
-        env:
-          # NODE_AUTH_TOKEN is required if using legacy token, 
-          # otherwise OIDC trusted publishing must be configured on npm.
-          # Including it here to support standard token usage if OIDC is not fully set.
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
