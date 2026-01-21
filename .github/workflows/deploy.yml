@@ -1,25 +1,94 @@
-name: build
+name: CI/CD
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
+    tags:
+      - 'v*'
+      - 'beta-*'
 
 jobs:
-  build-and-deploy:
+  build-and-deploy-demo:
     runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    permissions:
+      contents: write # Required to push to gh-pages branch
     steps:
-      - uses: actions/checkout@v3
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: '16.x'
-      - name: Install Dependencies
-        run: npm install
-      - name: Build Lrirary
-        run: npm run build:ci
+          node-version: '18' # Angular 16 compatibility
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Demo
+        # Builds to 'docs' folder with base-href /ngx-laydate/
+        run: npm run build:docs
+
       - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v4.4.2
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
+          # matches output-path in build:docs
+          folder: docs
           branch: gh-pages
-          folder: ./docs
+
+  publish-to-npm:
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/')
+    permissions:
+      id-token: write # Required for OIDC Trusted Publishing
+      contents: write # Required for creating GitHub Releases
+    outputs:
+      release_tag: ${{ steps.determine-tag.outputs.tag }}
+      is_prerelease: ${{ steps.determine-tag.outputs.is_prerelease }}
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Library
+        # 'build:dist' runs: clean, build:lib:prod, update:readme
+        run: npm run build:dist
+
+      - name: Determine Release Tag
+        id: determine-tag
+        run: |
+          if [[ $GITHUB_REF == refs/tags/v* ]]; then
+            echo "tag=latest" >> $GITHUB_OUTPUT
+            echo "is_prerelease=false" >> $GITHUB_OUTPUT
+          else
+            echo "tag=beta" >> $GITHUB_OUTPUT
+            echo "is_prerelease=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
+          draft: false
+          prerelease: ${{ steps.determine-tag.outputs.is_prerelease }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish to npm (OIDC provenance)
+        run: |
+          npm publish ./dist/ngx-laydate \
+            --tag ${{ steps.determine-tag.outputs.tag }} \
+            --provenance \
+            --access public
+        env:
+          # NODE_AUTH_TOKEN is required if using legacy token, 
+          # otherwise OIDC trusted publishing must be configured on npm.
+          # Including it here to support standard token usage if OIDC is not fully set.
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

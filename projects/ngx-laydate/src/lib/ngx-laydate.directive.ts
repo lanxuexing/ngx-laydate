@@ -3,20 +3,23 @@ import {
   Directive,
   ElementRef,
   EventEmitter,
-  Inject,
   InjectionToken,
   Input,
   NgZone,
   OnChanges,
-  OnDestroy,
   Output,
   SimpleChanges,
-  forwardRef
+  forwardRef,
+  inject,
+  DestroyRef,
+  Renderer2
 } from '@angular/core';
-import { ChangeFilter } from './change-filter';
-import { normalizeCommonJSImport } from './utils';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject } from 'rxjs';
+import { normalizeCommonJSImport } from './utils';
+import { isPlatformBrowser } from '@angular/common';
+import { PLATFORM_ID } from '@angular/core';
 
 export interface NgxLaydateConfig {
   laydate: any | (() => Promise<any>);
@@ -25,19 +28,23 @@ export interface NgxLaydateConfig {
 
 export const NGX_LAYDATE_CONFIG = new InjectionToken<NgxLaydateConfig>('NGX_LAYDATE_CONFIG');
 
-const NGX_LAYDATE_VALUE_ACCESSOR = {
-  provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => NgxLaydateDirective),
-  multi: true
-};
+let laydatePromise: Promise<any> | null = null;
+
 
 @Directive({
   selector: 'laydate, [laydate]',
   exportAs: 'laydate',
-  providers: [NGX_LAYDATE_VALUE_ACCESSOR]
+  standalone: true,
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => NgxLaydateDirective),
+      multi: true
+    }
+  ]
 })
-export class NgxLaydateDirective implements OnChanges, OnDestroy, AfterViewInit, ControlValueAccessor {
-  @Input() options: Partial<any> = {};
+export class NgxLaydateDirective implements OnChanges, AfterViewInit, ControlValueAccessor {
+  @Input() options: Record<string, any> = {};
 
   // ngx-laydate events
   @Output() laydateInit = new EventEmitter<any>();
@@ -56,38 +63,47 @@ export class NgxLaydateDirective implements OnChanges, OnDestroy, AfterViewInit,
 
   // controlValueAccessor
   private isNgModel = false;
-  private currentValue = '';
-  private destroy$ = new Subject<void>();
+  private currentValue: any = '';
   private ngLaydateCreated$ = new Subject<void>();
-  private onChange: any = () => { };
-  private onTouched: any = () => { };
+  private onChange: (value: any) => void = () => { };
+  private onTouched: () => void = () => { };
 
-  constructor(
-    @Inject(NGX_LAYDATE_CONFIG) public config: NgxLaydateConfig,
-    private el: ElementRef,
-    private ngZone: NgZone
-  ) {
+  private config = inject(NGX_LAYDATE_CONFIG);
+  private el = inject(ElementRef);
+  private renderer = inject(Renderer2);
+  private ngZone = inject(NgZone);
+  private destroyRef = inject(DestroyRef);
+  private platformId = inject(PLATFORM_ID);
+
+  constructor() {
     this.laydate = this.config.laydate;
+    this.destroyRef.onDestroy(() => {
+      if (isPlatformBrowser(this.platformId)) {
+        window.clearTimeout(this.initLaydateTimer);
+      }
+      this.dispose();
+    });
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    const filter = ChangeFilter.of(changes);
-    filter.notFirstAndEmpty<any>('options').subscribe((opt) => this.onOptionsChange(opt));
-  }
-
-  ngOnDestroy() {
-    window.clearTimeout(this.initLaydateTimer);
-    this.dispose();
-    this.destroy$.next();
-    this.destroy$.complete();
+    if (changes['options'] && !changes['options'].isFirstChange()) {
+      const opt = changes['options'].currentValue;
+      if (opt !== undefined && opt !== null) {
+        this.onOptionsChange(opt);
+      }
+    }
   }
 
   ngAfterViewInit(): void {
-    this.initLaydateTimer = window.setTimeout(() => this.initLaydate());
+    if (isPlatformBrowser(this.platformId)) {
+      this.initLaydateTimer = window.setTimeout(() => this.initLaydate());
+    }
   }
 
   writeValue(obj: any): void {
     this.currentValue = obj;
+    const value = obj === null || obj === undefined ? '' : obj;
+    this.renderer.setProperty(this.el.nativeElement, 'value', value);
   }
 
   registerOnChange(fn: any): void {
@@ -95,7 +111,7 @@ export class NgxLaydateDirective implements OnChanges, OnDestroy, AfterViewInit,
     this.onChange = fn;
     // delay execution until ngLaydate instance is created.
     this.ngLaydateCreated$.asObservable().pipe(
-      takeUntil(this.destroy$)
+      takeUntilDestroyed(this.destroyRef)
     ).subscribe(() => {
       this.setOption({ ...this.options, value: this.currentValue });
     });
@@ -108,16 +124,21 @@ export class NgxLaydateDirective implements OnChanges, OnDestroy, AfterViewInit,
   setDisabledState?(isDisabled: boolean): void {
     const dom = this.el.nativeElement;
     if (dom && dom.nodeName === 'INPUT') {
-      dom.disabled = isDisabled;
+      this.renderer.setProperty(dom, 'disabled', isDisabled);
     }
   }
 
   public hint(value: string) {
-    this.laydateIns.hint(value);
+    this.laydateIns?.hint(value);
   }
 
   private dispose() {
     if (this.ngLaydate) {
+      // Logic to properly dispose or unbind if laydate supports it
+      // laydate doesn't seem to have a destroy method in strict sense for the global obj,
+      // but individual instances rendered might need cleanup.
+      // Since laydate attaches to DOM, removing DOM (Angular does this) might be enough.
+      // But clearing references is good.
       this.ngLaydate = null;
       this.laydateIns = null;
     }
@@ -127,43 +148,56 @@ export class NgxLaydateDirective implements OnChanges, OnDestroy, AfterViewInit,
     if (this.ngLaydate) {
       try {
         // Since we are not using layui, we need to set the base path so that laydate.css can be loaded properly.
-        // docs: https://layui.gitee.io/v2/docs/modules/laydate.html#path
+        // docs: https://layui.dev/docs/2/laydate/#path
         this.ngLaydate.path = this.config.path;
-        this.laydateIns = this.ngLaydate.render({
-          // The four common callbacks for the control, if the corresponding event callback function is registered in the options, it will override the plugin's own EventEmitter.
-          // docs: https://layui.gitee.io/v2/docs/modules/laydate.html#onready
-          ready: (...agrs: any) => this.ngZone.run(() => this.laydateReady.emit(agrs)),
-          change: (...agrs: any) => this.ngZone.run(() => this.laydateChange.emit(agrs)),
-          done: (...agrs: any) => this.ngZone.run(() => this.laydateDone.emit(agrs)),
-          close: (...agrs: any) => this.ngZone.run(() => this.laydateClose.emit(agrs)),
+
+        // Ensure elem is correctly set to this element to avoid collision
+        const config = {
+          elem: this.el.nativeElement,
+          // The four common callbacks for the control...
+          ready: (...args: any) => this.ngZone.run(() => this.laydateReady.emit(args)),
+          change: (...args: any) => this.ngZone.run(() => this.laydateChange.emit(args)),
+          done: (...args: any) => this.ngZone.run(() => this.laydateDone.emit(args)),
+          close: (...args: any) => this.ngZone.run(() => this.laydateClose.emit(args)),
           ...option
-        });
+        };
+
+        this.laydateIns = this.ngLaydate.render(config);
       } catch (e) {
         console.error(e);
-        this.optionsError.emit(e);
+        this.optionsError.emit(e as Error);
       }
     }
   }
 
   private createLaydate() {
-    const dom = (this.options && this.options.elem) || this.el.nativeElement;
+    const dom = (this.options && this.options['elem']) || this.el.nativeElement;
 
-    // here a bit tricky: we check if the laydate module is provided as function returning native import('...') then use the promise
-    // otherwise create the function that imitates behaviour above with a provided as is module
+    // Use a global promise to ensure laydate is loaded only once
     return this.ngZone.runOutsideAngular(() => {
-      const load =
-        typeof this.laydate === 'function' ? this.laydate : () => Promise.resolve(this.laydate);
+      if (!isPlatformBrowser(this.platformId)) {
+        return Promise.resolve(null);
+      }
 
-      return normalizeCommonJSImport(load()).then((laydateInstance: any) => {
+      if (!laydatePromise) {
+        const load =
+          typeof this.laydate === 'function' ? this.laydate : () => Promise.resolve(this.laydate);
+        laydatePromise = normalizeCommonJSImport(load());
+      }
+
+      return laydatePromise!.then((laydateInstance: any) => {
         this.options = Object.assign({}, this.options, {
           elem: dom,
           ...(this.isNgModel && {
             // intercept 'done' callback of the control, continue event propagation when callback is present.
-            ...(this.options && this.options.done && { ngDone: this.options.done }),
-            done: (value, date, endDate) => {
+            ...(this.options && this.options['done'] && { ngDone: this.options['done'] }),
+            done: (value: any, date: any, endDate: any) => {
               this.onChange(value);
-              if (this.options && this.options.ngDone) {
-                this.options.ngDone(value, date, endDate);
+              this.ngZone.run(() => {
+                // Try to keep model in sync if needed, but onChange handles it
+              });
+              if (this.options && this.options['ngDone']) {
+                this.options['ngDone'](value, date, endDate);
               }
             }
           })
@@ -190,5 +224,4 @@ export class NgxLaydateDirective implements OnChanges, OnDestroy, AfterViewInit,
       }
     }
   }
-
 }

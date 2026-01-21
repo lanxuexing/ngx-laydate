@@ -1,49 +1,38 @@
+<div align="center">
+
 # NgxLaydate
 
-<p align="center">
-  <a href="https://github.com/lanxuexing/ngx-laydate/actions"><img src="https://github.com/lanxuexing/ngx-laydate/workflows/build/badge.svg?branch=main" alt="Build Status"></a>
-  <a href="https://npmcharts.com/compare/ngx-laydate?minimal=true"><img src="https://img.shields.io/npm/dm/ngx-laydate.svg?sanitize=true" alt="Downloads"></a>
-  <a href="https://www.npmjs.com/package/ngx-laydate"><img src="https://img.shields.io/npm/v/ngx-laydate.svg?sanitize=true" alt="Version"></a>
-  <a href="https://www.npmjs.com/package/ngx-laydate"><img src="https://img.shields.io/npm/l/ngx-laydate.svg?sanitize=true" alt="License"></a>
-</p>
+The Angular Directive for [Laydate](https://github.com/layui/laydate), built for modern Angular applications.
 
-Angular directive for [Laydate](https://github.com/layui/laydate) (version >= 5.x)
+[![NPM package](https://img.shields.io/npm/v/ngx-laydate.svg?style=flat-square)](https://npmjs.org/package/ngx-laydate)
+[![GitHub Release Date](https://img.shields.io/github/release-date/lanxuexing/ngx-laydate.svg?style=flat-square)](https://github.com/lanxuexing/ngx-laydate/releases)
+[![GitHub repo size](https://img.shields.io/github/repo-size/lanxuexing/ngx-laydate.svg?style=flat-square)](https://github.com/lanxuexing/ngx-laydate)
+[![GitHub Stars](https://img.shields.io/github/stars/lanxuexing/ngx-laydate.svg?style=flat-square)](https://github.com/lanxuexing/ngx-laydate/stargazers)
+[![CI/CD](https://github.com/lanxuexing/ngx-laydate/actions/workflows/deploy.yml/badge.svg)](https://github.com/lanxuexing/ngx-laydate/actions)
+[![Angular](https://img.shields.io/badge/angular-%23DD0031.svg?style=flat-square&logo=angular&logoColor=white)](https://angular.dev)
+[![Code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
+[![License](https://img.shields.io/npm/l/ngx-laydate.svg?style=flat-square)](https://github.com/lanxuexing/ngx-laydate/blob/main/LICENSE)
 
-- [Online Demo](https://lanxuexing.github.io/ngx-laydate)
-- [Online Docs](https://lanxuexing.github.io/ngx-laydate/api-docs)
-- [Laydate Online Demo](https://layui.gitee.io/v2/demo/laydate.html)
-- [Laydate Online Docs](https://layui.gitee.io/v2/docs/modules/laydate.html)
-- [ngxLaydate Options Docs](API.md)
+[English](./README.md) | [简体中文](./README-zh_CN.md)
 
-English | [简体中文](README-zh_CN.md)
+## 🔗 Live Demo
+Check out the component in action: **[https://lanxuexing.github.io/ngx-laydate/](https://lanxuexing.github.io/ngx-laydate/)**
 
-## Table of contents
+</div>
 
-- [Getting Started](#getting-started)
-- [Installation](#installation)
-- [Usage](#usage)
-- [API](#api)
-  - [Directive](#directive)
-  - [Laydate Instance](#laydate-instance)
-- [Events](#events)
-- [Demo](#demo)
+---
 
-# Getting Started
+## ✨ Features
 
-`ngx-laydate` is an Angular (ver >= 2.x) directive for Laydate (ver >= 5.x).
+- 🚀 **Modern Angular**: Built with Standalone Directives, supporting Angular 16+.
+- ⚡ **Optimized Loading**: Smart caching ensures the core library is loaded only once per session.
+- 🧱 **Easy Integration**: Seamless wrapper for the popular Laydate picker (versions >= 5.x).
+- 🧩 **Flexible Configuration**: Full access to all native Laydate options and events.
+- 🎨 **Customizable**: Determine your own theme color and path configuration.
+- 📦 **Lightweight**: Minimal overhead, focusing on wrapping the core functionality efficiently.
+- 🌏 **SSR Friendly**: Designed to work safely in Server-Side Rendering environments.
 
-Latest version @npm:
-
-- `v16.x` for Angular >= 16
-- `v15.x` for Angular >= 15
-- `v14.x` for Angular >= 14
-- `v13.x` for Angular >= 13
-- `v12.x` for Angular >= 12
-- `v11.x` for Angular >= 11
-- `v10.x` for Angular >= 10
-- `v1.x` for Angular >= 2.x
-
-# Installation
+## 📦 Installation
 
 ```bash
 # if you use npm
@@ -55,197 +44,137 @@ yarn add layui-laydate
 yarn add ngx-laydate
 ```
 
-:fire:TL;DR
+> **🔥 Pro Tip**: To utilize the latest Laydate features, replace "layui-laydate" with "laydate-next" and update the asset dependencies in your `angular.json` file.
 
-> To utilize the latest Laydate features, replace "layui-laydate" with "laydate-next" and update the asset dependencies in your "angular.json" file. Additionally, update the import for the "NgxLaydateModule" accordingly.
+## 🚀 Usage
 
-# Usage
+### 1. Standalone Component (Recommended)
 
-Please refer to the [demo](https://lanxuexing.github.io/ngx-laydate) page.
+Import `NgxLaydateDirective` directly in your component:
 
-1. Firstly, import `NgxLaydateModule` in your app module (or any other proper angular module):
-
-   ```typescript
-   import { NgxLaydateModule } from 'ngx-laydate';
-
-   @NgModule({
-     imports: [
-       NgxLaydateModule.forRoot({
-         /**
-          * This will import all modules from laydate.
-          * If you only need custom modules,
-          * please refer to [Custom Build] section.
-          * PS: Angular Version >= 11 need @ts-ignore or src/types/index.d.ts(declare module 'layui-laydate')
-          * Issues Link: https://stackoverflow.com/questions/41292559/could-not-find-a-declaration-file-for-module-module-name-path-to-module-nam
-          */
-         // @ts-ignore
-         laydate: () => import('layui-laydate'), // or import path-to-my-custom-laydate')
-         path: 'assets/laydate/', // or import path-to-my-custom-laydate')
-       }),
-     ],
-   })
-   export class AppModule {}
-   ```
-
-2. Then: configure assets in the `angular.json` file.
-
-  ```vim
-  {
-    architect: {
-      ...(PS: build -> options)
-          assets: [
-            {
-              "glob": "**/*",
-              "input": "node_modules/layui-laydate/dist/",
-              "output": "assets/laydate"
-            }
-          ]
-    }
-  }
-  ```
-
-
-3. Then: use `laydate` directive in a input element
-
-   - Simple example:
-
-     - html:
-
-     ```html
-     <!-- Supports ngModel and formControlName -->
-
-     <input laydate [options]="laydateOption" />
-     ```
-
-     - component:
-
-     ```typescript
-
-     // ...
-
-     laydateOption = {
-       lang: 'en',
-       value: '1989-10-14',
-       done: (value, date, endDate) => {
-        // Get the generated value of the date, for example: 2017-08-18
-        console.log(value);seconds: 0}
-        // Get the date time object: {year: 2017, month: 8, date: 18, hours: 0, minutes: 0, seconds: 0}
-        console.log(date);
-        // Get the end date time object, only returns when range selection is enabled (range: true). The object members are the same as above.
-        console.log(endDate);
-      }
-     };
-     ```
-
-🚀 **standalone component**
-
-When using NgxLaydateModule in a standalone component, we can use token NGX_LAYDATE_CONFIG to provide laydate
-
-```ts
-import { NgxLaydateModule, NGX_LAYDATE_CONFIG } from 'ngx-laydate';
+```typescript
+import { NgxLaydateDirective, NGX_LAYDATE_CONFIG } from 'ngx-laydate';
 
 @Component({
   standalone: true,
-  selector: 'my-laydate',
-  template: `
-    <input laydate [options]="{}" />
-  `,
-  imports: [NgxLaydateModule],
+  selector: 'app-root',
+  imports: [NgxLaydateDirective],
   providers: [
     {
       provide: NGX_LAYDATE_CONFIG,
       useFactory: () => ({
+        // Use standard import or custom path
         // @ts-ignore
-        laydate: () => import('layui-laydate'),
+        laydate: () => import('layui-laydate'), 
         path: 'assets/laydate/'
       }),
     },
-  ]
+  ],
+  template: `
+    <input laydate [options]="laydateOption" />
+  `
 })
-export class MyLaydateComponent {
-  // logic
+export class AppComponent {
+   laydateOption = {
+      lang: 'en',
+      type: 'datetime',
+      value: '2023-10-14 00:00:00'
+   };
 }
 ```
 
-# API
+### 2. NgModule (Backwards Compatibility)
 
-### Directive
-
-`laydate` directive support following input properties:
-
-| Input           | Type    | Default | Description
-| --------------- | ------- | ------- | -------- |
-| `[options]`     | object  | null    | The same as the options on the official demo site. |
-
-### Laydate Instance
-
-For example:
-
-- html:
-
-```html
-<input laydate [options]="laydateOptions" #myLaydate="laydate" />
-```
-
-- component:
+Import `NgxLaydateModule` in your module:
 
 ```typescript
-@ViewChild('myLaydate', { static: true, read: NgxLaydateDirective }) myLaydateRef: NgxLaydateDirective;
+import { NgxLaydateModule } from 'ngx-laydate';
 
-this.options = {
-  min: '2016-10-14',
-  max: '2080-10-14',
-  ready: () => {
-    this.myLaydateRef.hint('Date selection is set within the range of <br> October 14, 2016 to October 14, 2080.');
+@NgModule({
+  imports: [
+    NgxLaydateModule.forRoot({
+      // @ts-ignore
+      laydate: () => import('layui-laydate'), 
+      path: 'assets/laydate/'
+    }),
+  ],
+})
+export class AppModule {}
+```
+
+### 3. Configure Assets
+
+Add the laydate assets to your `angular.json`. This ensures themes and styles load correctly.
+
+```json
+{
+  "architect": {
+    "build": {
+      "options": {
+        "assets": [
+          {
+            "glob": "**/*",
+            "input": "node_modules/layui-laydate/dist/",
+            "output": "assets/laydate"
+          }
+        ]
+      }
+    }
   }
 }
 ```
 
-# Events
+## 📖 API
 
-As Laydate supports the `'click'` events, our `ngx-laydate` directive also supports the same click events but with an additional `laydate` prefix. For example:
+### Directive Inputs
 
-- html:
+| Input | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `[options]` | `LaydateOptions` | `null` | Configuration object matching the [official Laydate documentation](https://layui.dev/docs/2/laydate/). |
+
+### Events
+
+`ngx-laydate` proxies native Laydate events with a `laydate` prefix.
+
+| @Output | Description |
+| :--- | :--- |
+| `(laydateInit)` | Emitted when the instance is initialized. |
+| `(laydateReady)` | Emitted when the picker is displayed (`ready` callback). |
+| `(laydateChange)` | Emitted when the value changes (`done` callback). |
+| `(laydateDone)` | Same as change, consistent with native naming. |
+| `(laydateClose)` | Emitted when the picker is closed (`close` callback). |
+
+**Example:**
 
 ```html
-<input laydate [options]="laydateOptions" (laydateDone)="onDone($event)" />
+<input laydate [options]="opts" (laydateDone)="onDone($event)" />
 ```
 
-- typescript:
-
 ```typescript
-onDone([value, date]): void {
-  alert('You have selected the date: ' + value + '\nThe obtained object is ' + JSON.stringify(date));
+onDone([value, date, endDate]): void {
+  console.log('Selected:', value);
+  console.log('Date Object:', date);
 }
 ```
 
-- The '\$event' is same with the 'params' that Laydate dispatches.
+## 🛠️ Development
 
-It supports following event outputs:
-
-| @Output                   | Event                                   |
-| ------------------------- | --------------------------------------- |
-| laydateInit               | Emitted when the laydate is initialized |
-| laydateReady              | laydate event: `'ready'`                |
-| laydateChange             | laydate event: `'done'`                 |
-| laydateDone               | laydate event: `'change'`               |
-| laydateClose              | laydate event: `'close'`                |
-
-You can refer to the Laydate tutorial: [Events and Actions in Laydate](https://layui.gitee.io/v2/docs/modules/laydate.html) for more details of the event params. You can also refer to the [demo](https://lanxuexing.github.io/ngx-laydate/) page for a detailed example.
-
-# Demo
-
-You can clone this repo to your working copy and then launch the demo page in your local machine:
+Clone the repo and start the demo:
 
 ```bash
 npm install
 npm run start
-
-# or
-yarn install
-yarn start
 ```
 
-The demo page server is listening on: http://localhost:4200
+Visit: [http://localhost:4200](http://localhost:4200)
 
-[npm-badge-url]: https://www.npmjs.com/package/ngx-laydate
+## 🔗 Links
+- [Online Demo](https://lanxuexing.github.io/ngx-laydate)
+- [Official Laydate Docs](https://layui.dev/docs/2/laydate/)
+- [Laydate Gitee](https://gitee.com/layui/laydate)
+
+---
+
+<div align="center">
+  <sub>Built with ❤️ by <a href="https://github.com/lanxuexing">lanxuexing</a></sub>
+</div>

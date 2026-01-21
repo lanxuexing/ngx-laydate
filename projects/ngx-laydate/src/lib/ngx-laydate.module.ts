@@ -1,10 +1,9 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+
 import { NGX_LAYDATE_CONFIG, NgxLaydateConfig, NgxLaydateDirective } from './ngx-laydate.directive';
 
 @NgModule({
-  imports: [FormsModule],
-  declarations: [NgxLaydateDirective],
+  imports: [NgxLaydateDirective],
   exports: [NgxLaydateDirective]
 })
 export class NgxLaydateModule {
