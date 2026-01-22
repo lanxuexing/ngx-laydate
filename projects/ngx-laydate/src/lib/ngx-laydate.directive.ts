@@ -186,6 +186,11 @@ export class NgxLaydateDirective implements OnChanges, AfterViewInit, ControlVal
       }
 
       return laydatePromise!.then((laydateInstance: any) => {
+        // Check if laydateInstance has render method, if not try to get from window
+        if ((!laydateInstance || typeof laydateInstance.render !== 'function') && isPlatformBrowser(this.platformId) && (window as any).laydate) {
+          laydateInstance = (window as any).laydate;
+        }
+
         this.options = Object.assign({}, this.options, {
           elem: dom,
           ...(this.isNgModel && {
